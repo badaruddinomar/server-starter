@@ -7,8 +7,6 @@ process.on('uncaughtException', (err) => {
   logger.error(`Shutting down the server due to uncaught exception!`);
   process.exit(1);
 });
-const dfd = 1;
-dfd = 'd';
 // server--
 const server = app.listen(process.env.PORT, () => {
   logger.info(`Server listening on port ${process.env.PORT}`);

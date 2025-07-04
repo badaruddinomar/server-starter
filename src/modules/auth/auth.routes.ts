@@ -21,7 +21,6 @@ import {
 
 import validator from '@/middlewares/validator';
 const router = express.Router();
-
 router.post('/register', validator(registerSchema), register);
 router.post('/login', validator(loginSchema), login);
 router.post('/verify-email', validator(verificationCodeSchema), verifyEmail);

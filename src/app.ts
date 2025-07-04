@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -12,6 +12,9 @@ import fileUpload from 'express-fileupload';
 import { rateLimiter } from '@/middlewares/rateLimiter';
 import config from '@/config';
 import { schedulars } from '@/schedulers';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocs from '@/docs/swagger-output.json';
+import httpStatus from 'http-status';
 
 const app: Application = express();
 const corsOptions = {
@@ -37,6 +40,16 @@ app.get('/', (_req, res) => {
 });
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
+// Health check route
+app.get('/health', (_req: Request, res: Response) => {
+  res.status(httpStatus.OK).json({
+    success: true,
+    message: 'Server is running',
+    timestamp: new Date().toISOString(),
+  });
+});
+// Swagger docs route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // not found middleware
 app.use(notFound);
 app.use(globalErrorHandler);

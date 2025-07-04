@@ -13,6 +13,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
     "format:check": "prettier --check \"./src/**/*.+(js|ts|json)\"",
+    "swagger:generate": "ts-node ./src/docs/swagger.ts",
     "postinstall": "prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install"
@@ -76,8 +77,7 @@
   "lint-staged": {
     "**/*.{js,ts,json}": [
       "prettier --write",
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   }
 }

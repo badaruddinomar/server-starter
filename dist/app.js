@@ -17,6 +17,9 @@ const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const rateLimiter_1 = require("@/middlewares/rateLimiter");
 const config_1 = __importDefault(require("@/config"));
 const schedulers_1 = require("@/schedulers");
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const swagger_output_json_1 = __importDefault(require("@/docs/swagger-output.json"));
+const http_status_1 = __importDefault(require("http-status"));
 const app = (0, express_1.default)();
 const corsOptions = {
     origin: config_1.default.client_url,
@@ -40,6 +43,16 @@ app.get('/', (_req, res) => {
 });
 app.use('/api/v1/auth', auth_routes_1.default);
 app.use('/api/v1/users', user_routes_1.default);
+// Health check route
+app.get('/health', (_req, res) => {
+    res.status(http_status_1.default.OK).json({
+        success: true,
+        message: 'Server is running',
+        timestamp: new Date().toISOString(),
+    });
+});
+// Swagger docs route
+app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_output_json_1.default));
 // not found middleware
 app.use(notFound_1.default);
 app.use(errorHandler_1.globalErrorHandler);

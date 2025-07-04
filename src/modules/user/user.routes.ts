@@ -14,7 +14,6 @@ import {
 } from '@/modules/user/user.dto';
 
 const router = express.Router();
-
 router.get('/profile', authMiddleware, getUserProfile);
 router.get('/list', authMiddleware, authorizeRoles('ADMIN'), getAllUsers);
 router.patch(
