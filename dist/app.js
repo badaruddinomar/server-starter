@@ -16,6 +16,7 @@ const user_routes_1 = __importDefault(require("@/modules/user/user.routes"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const rateLimiter_1 = require("@/middlewares/rateLimiter");
 const config_1 = __importDefault(require("@/config"));
+const schedulers_1 = require("@/schedulers");
 const app = (0, express_1.default)();
 const corsOptions = {
     origin: config_1.default.client_url,
@@ -32,6 +33,7 @@ app.use((0, cookie_parser_1.default)());
 app.use((0, express_fileupload_1.default)({ useTempFiles: true, tempFileDir: '/tmp/' }));
 app.set('trust proxy', 1);
 app.use((0, rateLimiter_1.rateLimiter)(100, 15 * 60 * 1000)); // 100 requests per 15 minutes
+(0, schedulers_1.schedulars)();
 // routes--
 app.get('/', (_req, res) => {
     res.send('Hello World!');

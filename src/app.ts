@@ -11,6 +11,7 @@ import userRoutes from '@/modules/user/user.routes';
 import fileUpload from 'express-fileupload';
 import { rateLimiter } from '@/middlewares/rateLimiter';
 import config from '@/config';
+import { schedulars } from '@/schedulers';
 
 const app: Application = express();
 const corsOptions = {
@@ -28,6 +29,7 @@ app.use(cookieParser());
 app.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));
 app.set('trust proxy', 1);
 app.use(rateLimiter(100, 15 * 60 * 1000)); // 100 requests per 15 minutes
+schedulars();
 
 // routes--
 app.get('/', (_req, res) => {
