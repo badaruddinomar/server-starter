@@ -10,6 +10,7 @@ process.on('uncaughtException', (err) => {
 const foo = 1;
 foo = 'foo';
 foot = 'foot';
+ddf: df;
 // server--
 const server = app.listen(process.env.PORT, () => {
   logger.info(`Server listening on port ${process.env.PORT}`);
