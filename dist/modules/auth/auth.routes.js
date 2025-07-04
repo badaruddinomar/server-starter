@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const auth_1 = require("@/middlewares/auth");
+const express_1 = __importDefault(require("express"));
+const auth_controllers_1 = require("@/modules/auth/auth.controllers");
+const auth_dto_1 = require("@/modules/auth/auth.dto");
+const validator_1 = __importDefault(require("@/middlewares/validator"));
+const router = express_1.default.Router();
+router.post('/register', (0, validator_1.default)(auth_dto_1.registerSchema), auth_controllers_1.register);
+router.post('/login', (0, validator_1.default)(auth_dto_1.loginSchema), auth_controllers_1.login);
+router.post('/verify-email', (0, validator_1.default)(auth_dto_1.verificationCodeSchema), auth_controllers_1.verifyEmail);
+router.post('/resend-verify-code', (0, validator_1.default)(auth_dto_1.emailVerifySchema), auth_controllers_1.resendVerifyCode);
+router.post('/forgot-password', (0, validator_1.default)(auth_dto_1.emailVerifySchema), auth_controllers_1.forgotPassword);
+router.post('/verify-forgot-password-code', (0, validator_1.default)(auth_dto_1.verifyForgotPasswordCodeSchema), auth_controllers_1.verifyForgotPasswordCode);
+router.post('/reset-password', (0, validator_1.default)(auth_dto_1.resetPasswordSchema), auth_controllers_1.resetPassword);
+router.post('/logout', auth_1.authMiddleware, auth_controllers_1.logout);
+exports.default = router;
